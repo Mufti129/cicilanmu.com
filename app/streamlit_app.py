@@ -93,10 +93,7 @@ elif menu == "Prediksi Gagal Bayar":
        # st.markdown("""
         #Digunakan untuk klasifikasi risiko gagal bayar.
         #""")
-        st.markdown("""
-Metode yang digunakan dalam analisis ini adalah Random Forest Classification, yaitu algoritma machine learning berbasis ensemble yang menggabungkan banyak decision tree untuk menghasilkan prediksi yang lebih akurat dan stabil. Model ini bekerja dengan cara membangun sejumlah pohon keputusan dari subset data yang berbeda, kemudian menggabungkan hasil prediksi melalui mekanisme voting.
-Dalam konteks bisnis gadai, metode ini digunakan untuk memprediksi kemungkinan nasabah mengalami gagal bayar (default) berdasarkan berbagai faktor seperti nilai pinjaman, nilai jaminan, tingkat keterlambatan pembayaran, serta kondisi ekonomi nasabah seperti pendapatan. Pemilihan Random Forest didasarkan pada kemampuannya dalam menangkap pola hubungan yang kompleks dan non-linear antar variabel, serta ketahanannya terhadap noise dan outlier pada data 
-Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proaktif, misalnya dengan memperketat persetujuan pinjaman untuk nasabah berisiko tinggi atau menyesuaikan strategi penagihan. Hasil dari model ini diharapkan dapat membantu meningkatkan kualitas portofolio pinjaman dan mengurangi potensi kerugian akibat gagal bayar.""")
+        st.markdown("""Model Random Forest digunakan untuk memprediksi risiko gagal bayar berdasarkan data nasabah seperti pinjaman, jaminan, pendapatan, dan keterlambatan. Model ini membantu perusahaan mengidentifikasi nasabah berisiko sehingga dapat mengambil keputusan yang lebih tepat dan mengurangi kerugian.""")
 
     #####
     # ======================

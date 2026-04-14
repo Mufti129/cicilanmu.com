@@ -57,9 +57,7 @@ if menu == "Overview":
     
     with col2:
         st.metric("Total Loan", f"{int(total_loan):,}")
-    
-    with col3:
-        st.metric("Default Rate (%)", f"{round(default_rate,2)}%")
+
     with col3:
         st.metric(
             "Default Rate (%)",

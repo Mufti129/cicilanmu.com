@@ -1,0 +1,9 @@
+customer_id,loan_amount,collateral_value,tenor_days,interest_rate,branch,job_type,monthly_income,loan_count,days_late,redeemed
+1,2000000,3000000,30,0.12,Jakarta,UMKM,5000000,3,0,1
+2,1500000,2000000,30,0.12,Bandung,Karyawan,4000000,1,10,0
+3,5000000,7000000,60,0.10,Jakarta,UMKM,8000000,5,0,1
+4,1000000,1500000,30,0.15,Surabaya,Freelance,3000000,2,15,0
+5,3000000,4000000,45,0.11,Bandung,Karyawan,6000000,4,0,1
+6,2500000,3000000,30,0.12,Jakarta,UMKM,4500000,2,5,1
+7,1800000,2500000,30,0.13,Surabaya,Freelance,3500000,1,12,0
+8,4000000,5000000,60,0.10,Bandung,Karyawan,7000000,3,0,1

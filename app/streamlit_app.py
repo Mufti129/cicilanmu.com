@@ -481,7 +481,7 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     # ======================
     # ⏱️ RISIKO KETERLAMBATAN
     # ======================
-    st.subheader("⏱️ Risiko berdasarkan Keterlambatan")
+    st.subheader("Risiko berdasarkan Keterlambatan")
     
     late_group = pd.cut(
         df['days_late'],
@@ -503,7 +503,7 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     # ======================
     # 💰 RISIKO INCOME
     # ======================
-    st.subheader("💰 Risiko berdasarkan Pendapatan")
+    st.subheader("Risiko berdasarkan Pendapatan")
     
     income_group = pd.qcut(df['monthly_income'], 3, labels=["Low", "Mid", "High"])
     income_default = df.groupby(income_group)['redeemed'].mean().reset_index()
@@ -520,7 +520,7 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     # ======================
     # 📊 RISIKO LTV
     # ======================
-    st.subheader("📊 Risiko berdasarkan LTV")
+    st.subheader("Risiko berdasarkan LTV")
     
     df['ltv'] = df['loan_amount'] / df['collateral_value']
     
@@ -544,7 +544,7 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     # ======================
     # 📦 RISIKO LOAN AMOUNT
     # ======================
-    st.subheader("📦 Risiko berdasarkan Jumlah Pinjaman")
+    st.subheader("Risiko berdasarkan Jumlah Pinjaman")
     
     loan_group = pd.qcut(df['loan_amount'], 3, labels=["Kecil", "Sedang", "Besar"])
     loan_default = df.groupby(loan_group)['redeemed'].mean().reset_index()
@@ -561,7 +561,7 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     # ======================
     # 🏢 RISIKO CABANG
     # ======================
-    st.subheader("🏢 Risiko berdasarkan Cabang")
+    st.subheader("Risiko berdasarkan Cabang")
     
     branch_default = df.groupby('branch')['redeemed'].mean().reset_index()
     branch_default.columns = ['Cabang', 'Default Rate']

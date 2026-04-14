@@ -235,7 +235,7 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
     #if avg_income < 5000000:
      #   st.warning("Mayoritas nasabah memiliki income rendah → risiko meningkat")
 elif menu == "Clustering Pelanggan":
-    st.header("Segmentasi berdasarkan perilaku pinjaman"")
+    st.header("Segmentasi berdasarkan perilaku pinjaman")
 
     # ======================
     # METODOLOGI (HIDE)

@@ -49,10 +49,7 @@ if menu == "Overview":
     total_customer = len(df)
     total_loan = df['loan_amount'].sum()
     default_rate = (1 - df['redeemed'].mean()) * 100
-
-    st.metric("Total Nasabah", total_customer)
-    st.metric("Total Loan", int(total_loan))
-    st.metric("Default Rate (%)", round(default_rate, 2))
+    
     col1, col2, col3 = st.columns(3)
 
     with col1:

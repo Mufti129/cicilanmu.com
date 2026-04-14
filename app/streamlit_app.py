@@ -293,6 +293,7 @@ elif menu == "Clustering Pelanggan":
     - Besaran pinjaman
     - Tingkat pendapatan
     - Frekuensi transaksi
+    
     Dengan memahami cluster ini, perusahaan dapat membedakan antara nasabah bernilai tinggi, nasabah biasa, dan nasabah yang berpotensi berisiko.
     """)
 

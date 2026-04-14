@@ -476,3 +476,66 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
             st.info(f"{job} → Cukup stabil")
         else:
             st.info(f"{job} → Perlu perhatian (risiko lebih tinggi)")
+    st.subheader("⏱️ Risiko berdasarkan Keterlambatan")
+
+    late_default = df.groupby(pd.cut(df['days_late'], bins=[-1,0,7,14,30]))['redeemed'].mean()
+    
+    st.bar_chart(late_default)
+    
+    st.markdown("""
+    Semakin tinggi keterlambatan, semakin besar risiko gagal bayar.
+    """)
+    # Insight otomatis
+    worst_late = late_default.idxmin()
+    st.warning(f"Kelompok keterlambatan {worst_late} memiliki risiko tertinggi.")
+
+    st.subheader("💰 Risiko berdasarkan Pendapatan")
+
+    income_group = pd.qcut(df['monthly_income'], 3, labels=["Low", "Mid", "High"])
+    income_default = df.groupby(income_group)['redeemed'].mean()
+    
+    st.bar_chart(income_default)
+    
+    st.markdown("""
+    Pendapatan mempengaruhi kemampuan bayar nasabah.
+    """)
+    
+    # Insight
+    low_income = income_default.idxmin()
+    st.warning(f"Kelompok {low_income} income memiliki risiko lebih tinggi.")
+
+    st.subheader("📊 Risiko berdasarkan LTV")
+    
+    df['ltv'] = df['loan_amount'] / df['collateral_value']
+    
+    ltv_group = pd.cut(df['ltv'], bins=[0,0.5,0.8,1.5], labels=["Low", "Medium", "High"])
+    ltv_default = df.groupby(ltv_group)['redeemed'].mean()
+    
+    st.bar_chart(ltv_default)
+    
+    st.markdown("""
+    Semakin tinggi LTV (pinjaman mendekati nilai jaminan), semakin tinggi risiko.
+    """)
+    
+    # Insight
+    st.warning("Nasabah dengan LTV tinggi cenderung lebih berisiko.")
+   
+    st.subheader("📦 Risiko berdasarkan Jumlah Pinjaman")
+
+    loan_group = pd.qcut(df['loan_amount'], 3, labels=["Kecil", "Sedang", "Besar"])
+    loan_default = df.groupby(loan_group)['redeemed'].mean()
+    
+    st.bar_chart(loan_default)
+    
+    st.markdown("""
+    Jumlah pinjaman dapat mempengaruhi risiko gagal bayar.
+    """)
+
+    st.subheader("🏢 Risiko berdasarkan Cabang")
+
+    branch_default = df.groupby('branch')['redeemed'].mean()
+    
+    st.bar_chart(branch_default)
+    
+    worst_branch = branch_default.idxmin()
+    st.warning(f"Cabang {worst_branch} memiliki risiko gagal bayar lebih tinggi.")

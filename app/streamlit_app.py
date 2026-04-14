@@ -80,9 +80,13 @@ elif menu == "Prediksi Gagal Bayar":
     st.header("🤖 Prediksi Gagal Bayar")
 
     with st.expander("📘 Metodologi Random Forest"):
+       # st.markdown("""
+        #Digunakan untuk klasifikasi risiko gagal bayar.
+        #""")
         st.markdown("""
-        Digunakan untuk klasifikasi risiko gagal bayar.
-        """)
+Metode yang digunakan dalam analisis ini adalah Random Forest Classification, yaitu algoritma machine learning berbasis ensemble yang menggabungkan banyak decision tree untuk menghasilkan prediksi yang lebih akurat dan stabil. Model ini bekerja dengan cara membangun sejumlah pohon keputusan dari subset data yang berbeda, kemudian menggabungkan hasil prediksi melalui mekanisme voting.
+Dalam konteks bisnis gadai, metode ini digunakan untuk memprediksi kemungkinan nasabah mengalami gagal bayar (default) berdasarkan berbagai faktor seperti nilai pinjaman, nilai jaminan, tingkat keterlambatan pembayaran, serta kondisi ekonomi nasabah seperti pendapatan. Pemilihan Random Forest didasarkan pada kemampuannya dalam menangkap pola hubungan yang kompleks dan non-linear antar variabel, serta ketahanannya terhadap noise dan outlier pada data 
+Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proaktif, misalnya dengan memperketat persetujuan pinjaman untuk nasabah berisiko tinggi atau menyesuaikan strategi penagihan. Hasil dari model ini diharapkan dapat membantu meningkatkan kualitas portofolio pinjaman dan mengurangi potensi kerugian akibat gagal bayar.""")
 
     input_data = df_clean.drop(columns=['customer_id', 'redeemed']).iloc[0:1]
     pred = model.predict(input_data)[0]
@@ -111,8 +115,11 @@ elif menu == "Clustering Pelanggan":
     st.header("👥 Clustering")
 
     with st.expander("📘 Metodologi K-Means"):
-        st.markdown("Segmentasi berdasarkan perilaku pinjaman")
-
+        #st.markdown("Segmentasi berdasarkan perilaku pinjaman")
+        st.markdown("""Analisis clustering dalam dashboard ini menggunakan metode K-Means Clustering, yaitu teknik unsupervised learning yang bertujuan untuk mengelompokkan pelanggan ke dalam beberapa segmen berdasarkan kemiripan karakteristik mereka. Algoritma ini bekerja dengan membagi data ke dalam sejumlah cluster yang telah ditentukan sebelumnya, di mana setiap data akan masuk ke cluster dengan jarak terdekat terhadap centroid.
+Dalam implementasinya pada bisnis gadai, variabel yang digunakan meliputi jumlah pinjaman, pendapatan bulanan, dan frekuensi transaksi. Dengan pendekatan ini, perusahaan dapat mengidentifikasi kelompok pelanggan seperti nasabah bernilai tinggi, nasabah dengan aktivitas rendah, maupun nasabah dengan potensi risiko tinggi.
+Hasil clustering ini sangat berguna dalam mendukung pengambilan keputusan strategis, seperti penentuan target pemasaran, pemberian limit pinjaman, hingga penyesuaian layanan berdasarkan profil masing-masing segmen pelanggan. Dengan memahami karakteristik tiap cluster, perusahaan dapat meningkatkan efisiensi operasional dan optimalisasi revenue.
+""")
     df_cluster = run_clustering(df_clean)
 
     cluster_counts = df_cluster['cluster'].value_counts()

@@ -165,7 +165,43 @@ Dengan segmentasi ini, perusahaan dapat merancang strategi yang lebih tepat sasa
 
     if 'Low' in segment_counts:
         st.warning(f"{segment_counts['Low']} pelanggan low value → perlu engagement")
+    # ======================
+    # 🔥 LIST DATA PER SEGMENT
+    # ======================
+    st.subheader("📋 Detail Pelanggan per Segmen")
 
+    selected_segment = st.selectbox(
+        "Pilih Segmen",
+        ["High", "Mid", "Low"]
+    )
+
+    # Filter data
+    segment_data = rfm[rfm['segment'] == selected_segment]
+
+    # Gabungkan dengan data asli biar lebih lengkap
+    merged = df.merge(segment_data, on="customer_id")
+
+    st.write(f"Menampilkan data untuk segmen: **{selected_segment}**")
+
+    st.dataframe(
+        merged[['customer_id', 'job_type', 'monthly_income', 'loan_amount', 'frequency', 'monetary']]
+        .sort_values(by='monetary', ascending=False),
+        use_container_width=True
+    )
+
+    # ======================
+    # 🔥 INSIGHT PER SEGMENT
+    # ======================
+    st.subheader("🧠 Insight Segmen")
+
+    if selected_segment == "High":
+        st.success("Pelanggan ini memiliki kontribusi tinggi → cocok untuk program loyalitas & peningkatan limit pinjaman")
+
+    elif selected_segment == "Mid":
+        st.info("Pelanggan ini memiliki potensi berkembang → bisa ditingkatkan dengan promo atau penawaran khusus")
+
+    elif selected_segment == "Low":
+        st.warning("Pelanggan ini memiliki kontribusi rendah → perlu strategi aktivasi atau edukasi")
 # ======================
 # PERILAKU
 # ======================

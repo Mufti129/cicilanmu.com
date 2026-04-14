@@ -14,7 +14,7 @@ st.title("📊 Pawnshop Analytics Dashboard")
 # ======================
 # LOAD DATA
 # ======================
-df = load_data('../data/pawn_data.csv')
+df = load_data('data/pawn_data.csv')
 df_clean = preprocess(df)
 
 # ======================

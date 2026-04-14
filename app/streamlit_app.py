@@ -93,7 +93,7 @@ elif menu == "Prediksi Gagal Bayar":
        # st.markdown("""
         #Digunakan untuk klasifikasi risiko gagal bayar.
         #""")
-        st.markdown("""Model Random Forest digunakan untuk memprediksi risiko gagal bayar berdasarkan data nasabah seperti pinjaman, jaminan, pendapatan, dan keterlambatan. Model ini membantu perusahaan mengidentifikasi nasabah berisiko sehingga dapat mengambil keputusan yang lebih tepat dan mengurangi kerugian.""")
+        st.markdown("""Model Random Forest untuk memprediksi risiko gagal bayar berdasarkan data nasabah seperti pinjaman, jaminan, pendapatan, dan keterlambatan. Model ini membantu mengidentifikasi nasabah berisiko sehingga dapat mengambil keputusan yang lebih tepat dan mengurangi kerugian.""")
 
     #####
     # ======================
@@ -346,7 +346,7 @@ elif menu == "Segmentasi Pelanggan":
         st.markdown("""
 Segmentasi pelanggan dilakukan menggunakan metode RFM Analysis, yaitu pendekatan yang mengelompokkan pelanggan berdasarkan tiga dimensi utama: Recency (seberapa baru pelanggan melakukan transaksi), Frequency (seberapa sering pelanggan bertransaksi), dan Monetary (berapa besar nilai transaksi yang dihasilkan).
 
-Metode ini umum digunakan dalam analisis perilaku pelanggan karena mampu memberikan gambaran yang jelas mengenai nilai dan kontribusi masing-masing pelanggan terhadap bisnis. Dalam konteks gadai, RFM membantu mengidentifikasi pelanggan yang aktif dan bernilai tinggi, serta membedakannya dengan pelanggan yang kurang aktif atau berisiko churn.
+Metode ini umum digunakan dalam analisis perilaku pelanggan karena mampu memberikan gambaran yang jelas mengenai nilai dan kontribusi masing-masing pelanggan terhadap bisnis. RFM membantu mengidentifikasi pelanggan yang aktif dan bernilai tinggi, serta membedakannya dengan pelanggan yang kurang aktif atau berisiko churn.
 
 Dengan segmentasi ini, perusahaan dapat merancang strategi yang lebih tepat sasaran, seperti memberikan penawaran khusus kepada pelanggan high value, meningkatkan engagement pada pelanggan mid value, serta melakukan pendekatan retensi terhadap pelanggan low value. Implementasi RFM diharapkan dapat meningkatkan loyalitas pelanggan sekaligus memaksimalkan profitabilitas.
 """)

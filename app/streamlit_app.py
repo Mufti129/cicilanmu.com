@@ -209,32 +209,132 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
 # ======================
 # CLUSTERING
 # ======================
-elif menu == "Clustering Pelanggan":
-    st.header("Clustering")
+#elif menu == "Clustering Pelanggan":
+ #   st.header("Clustering")
 
+  #  with st.expander("Metodologi K-Means"):
+   #     #st.markdown("Segmentasi berdasarkan perilaku pinjaman")
+    #    st.markdown("""Analisis clustering dalam dashboard ini menggunakan metode K-Means Clustering, yaitu teknik unsupervised learning yang bertujuan untuk mengelompokkan pelanggan ke dalam beberapa segmen berdasarkan kemiripan karakteristik mereka. Algoritma ini bekerja dengan membagi data ke dalam sejumlah cluster yang telah ditentukan sebelumnya, di mana setiap data akan masuk ke cluster dengan jarak terdekat terhadap centroid.
+#Dalam implementasinya pada bisnis gadai, variabel yang digunakan meliputi jumlah pinjaman, pendapatan bulanan, dan frekuensi transaksi. Dengan pendekatan ini, perusahaan dapat mengidentifikasi kelompok pelanggan seperti nasabah bernilai tinggi, nasabah dengan aktivitas rendah, maupun nasabah dengan potensi risiko tinggi.
+#Hasil clustering ini sangat berguna dalam mendukung pengambilan keputusan strategis, seperti penentuan target pemasaran, pemberian limit pinjaman, hingga penyesuaian layanan berdasarkan profil masing-masing segmen pelanggan. Dengan memahami karakteristik tiap cluster, perusahaan dapat meningkatkan efisiensi operasional dan optimalisasi revenue.
+#""")
+ #   df_cluster = run_clustering(df_clean)
+
+  #  cluster_counts = df_cluster['cluster'].value_counts()
+   # st.bar_chart(cluster_counts)
+
+    # 🔥 AUTO INSIGHT
+   # st.subheader("Insight")
+
+    #biggest_cluster = cluster_counts.idxmax()
+
+    #st.info(f"Cluster terbesar adalah Cluster {biggest_cluster}")
+
+    #avg_income = df.groupby('customer_id')['monthly_income'].mean().mean()
+
+    #if avg_income < 5000000:
+     #   st.warning("Mayoritas nasabah memiliki income rendah → risiko meningkat")
+elif menu == "Clustering Pelanggan":
+    st.header("Clustering Pelanggan")
+
+    # ======================
+    # METODOLOGI (HIDE)
+    # ======================
     with st.expander("Metodologi K-Means"):
-        #st.markdown("Segmentasi berdasarkan perilaku pinjaman")
-        st.markdown("""Analisis clustering dalam dashboard ini menggunakan metode K-Means Clustering, yaitu teknik unsupervised learning yang bertujuan untuk mengelompokkan pelanggan ke dalam beberapa segmen berdasarkan kemiripan karakteristik mereka. Algoritma ini bekerja dengan membagi data ke dalam sejumlah cluster yang telah ditentukan sebelumnya, di mana setiap data akan masuk ke cluster dengan jarak terdekat terhadap centroid.
-Dalam implementasinya pada bisnis gadai, variabel yang digunakan meliputi jumlah pinjaman, pendapatan bulanan, dan frekuensi transaksi. Dengan pendekatan ini, perusahaan dapat mengidentifikasi kelompok pelanggan seperti nasabah bernilai tinggi, nasabah dengan aktivitas rendah, maupun nasabah dengan potensi risiko tinggi.
-Hasil clustering ini sangat berguna dalam mendukung pengambilan keputusan strategis, seperti penentuan target pemasaran, pemberian limit pinjaman, hingga penyesuaian layanan berdasarkan profil masing-masing segmen pelanggan. Dengan memahami karakteristik tiap cluster, perusahaan dapat meningkatkan efisiensi operasional dan optimalisasi revenue.
-""")
+        st.markdown("""
+        K-Means Clustering digunakan untuk mengelompokkan nasabah berdasarkan kemiripan karakteristik seperti jumlah pinjaman, pendapatan, dan frekuensi transaksi. Hasilnya adalah beberapa kelompok (cluster) dengan profil yang berbeda.
+        """)
+
+    # ======================
+    # JALANKAN CLUSTERING
+    # ======================
     df_cluster = run_clustering(df_clean)
 
     cluster_counts = df_cluster['cluster'].value_counts()
+    st.subheader("Distribusi Cluster")
     st.bar_chart(cluster_counts)
 
-    # 🔥 AUTO INSIGHT
-    st.subheader("Insight")
+    # ======================
+    # 🔥 PENJELASAN HASIL CLUSTER
+    # ======================
+    st.subheader("📖 Penjelasan Hasil Cluster")
+
+    st.markdown("""
+    Grafik di atas menunjukkan jumlah nasabah dalam setiap cluster yang terbentuk dari proses K-Means.
+
+    Setiap cluster merepresentasikan kelompok nasabah dengan karakteristik yang mirip. Perbedaan antar cluster biasanya dipengaruhi oleh:
+    - Besaran pinjaman
+    - Tingkat pendapatan
+    - Frekuensi transaksi
+
+    Dengan memahami cluster ini, perusahaan dapat membedakan antara nasabah bernilai tinggi, nasabah biasa, dan nasabah yang berpotensi berisiko.
+    """)
+
+    # ======================
+    # 🔥 AUTO INTERPRETASI
+    # ======================
+    st.subheader("💡 Insight Otomatis")
 
     biggest_cluster = cluster_counts.idxmax()
+    smallest_cluster = cluster_counts.idxmin()
 
-    st.info(f"Cluster terbesar adalah Cluster {biggest_cluster}")
+    st.info(f"Cluster terbesar adalah Cluster {biggest_cluster} → mayoritas nasabah berada di kelompok ini")
+    st.warning(f"Cluster terkecil adalah Cluster {smallest_cluster} → segmen ini lebih spesifik")
 
-    avg_income = df.groupby('customer_id')['monthly_income'].mean().mean()
+    # ======================
+    # 🔥 PROFIL TIAP CLUSTER
+    # ======================
+    st.subheader("📊 Profil Rata-rata per Cluster")
 
-    if avg_income < 5000000:
-        st.warning("Mayoritas nasabah memiliki income rendah → risiko meningkat")
+    profile = df_cluster.groupby('cluster')[['loan_amount', 'monthly_income', 'loan_count']].mean()
+    st.dataframe(profile, use_container_width=True)
 
+    st.markdown("""
+    Interpretasi:
+    - Nilai loan_amount tinggi → nasabah dengan pinjaman besar
+    - Income tinggi → kemampuan bayar lebih baik
+    - Loan_count tinggi → nasabah aktif
+    """)
+
+    # ======================
+    # 🔥 LIST DATA PER CLUSTER
+    # ======================
+    st.subheader("📋 Detail Nasabah per Cluster")
+
+    selected_cluster = st.selectbox(
+        "Pilih Cluster",
+        sorted(df_cluster['cluster'].unique())
+    )
+
+    cluster_data = df_cluster[df_cluster['cluster'] == selected_cluster]
+
+    # Gabungkan dengan data asli
+    merged = df.merge(cluster_data[['customer_id', 'cluster']], on='customer_id')
+
+    st.write(f"Menampilkan data untuk Cluster {selected_cluster}")
+
+    st.dataframe(
+        merged[['customer_id', 'job_type', 'monthly_income', 'loan_amount', 'loan_count', 'cluster']]
+        .sort_values(by='loan_amount', ascending=False),
+        use_container_width=True
+    )
+
+    # ======================
+    # 🔥 INSIGHT PER CLUSTER
+    # ======================
+    st.subheader("🧠 Insight Cluster")
+
+    avg_loan = cluster_data['loan_amount'].mean()
+    avg_income = cluster_data['monthly_income'].mean()
+
+    if avg_loan > df['loan_amount'].mean():
+        st.warning("Cluster ini memiliki rata-rata pinjaman tinggi → potensi risiko & profit besar")
+
+    if avg_income > df['monthly_income'].mean():
+        st.success("Cluster ini memiliki income tinggi → relatif lebih aman")
+
+    if avg_income < df['monthly_income'].mean():
+        st.warning("Cluster ini memiliki income rendah → perlu perhatian")
 # ======================
 # SEGMENTASI
 # ======================

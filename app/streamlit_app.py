@@ -431,9 +431,9 @@ elif menu == "Perilaku Konsumen":
     with st.expander("Metodologi EDA"):
         #st.markdown("Analisis pola perilaku nasabah")
         st.markdown("""
-Analisis perilaku konsumen dalam dashboard ini dilakukan باستخدام pendekatan Exploratory Data Analysis (EDA), yaitu proses eksplorasi data untuk memahami pola, tren, dan hubungan antar variabel yang terdapat dalam dataset. EDA merupakan langkah awal yang sangat penting dalam data analytics karena membantu mengidentifikasi insight yang relevan sebelum dilakukan analisis lanjutan.
+Analisis perilaku konsumen dalam dashboard ini dilakukan pendekatan Exploratory Data Analysis (EDA), yaitu proses eksplorasi data untuk memahami pola, tren, dan hubungan antar variabel yang terdapat dalam dataset. EDA merupakan langkah awal yang sangat penting dalam data analytics karena membantu mengidentifikasi insight yang relevan sebelum dilakukan analisis lanjutan.
 
-Dalam studi ini, EDA digunakan untuk menganalisis hubungan antara karakteristik nasabah, seperti jenis pekerjaan, jumlah pinjaman, dan tingkat keterlambatan pembayaran terhadap risiko gagal bayar. Melalui visualisasi data seperti distribusi dan perbandingan antar kelompok, perusahaan dapat memperoleh pemahaman yang lebih dalam mengenai faktor-faktor yang mempengaruhi perilaku nasabah.
+Disini EDA digunakan untuk menganalisis hubungan antara karakteristik nasabah, seperti jenis pekerjaan, jumlah pinjaman, dan tingkat keterlambatan pembayaran terhadap risiko gagal bayar. Melalui visualisasi data seperti distribusi dan perbandingan antar kelompok, perusahaan dapat memperoleh pemahaman yang lebih dalam mengenai faktor-faktor yang mempengaruhi perilaku nasabah.
 
 Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusan bisnis, seperti penyesuaian kebijakan kredit, pengelolaan risiko, serta pengembangan strategi pemasaran yang lebih efektif dan berbasis data.
 """)

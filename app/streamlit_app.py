@@ -235,7 +235,7 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
     #if avg_income < 5000000:
      #   st.warning("Mayoritas nasabah memiliki income rendah → risiko meningkat")
 elif menu == "Clustering Pelanggan":
-    st.header("Clustering Pelanggan")
+    st.header("Segmentasi berdasarkan perilaku pinjaman"")
 
     # ======================
     # METODOLOGI (HIDE)
@@ -257,38 +257,32 @@ elif menu == "Clustering Pelanggan":
     # ======================
     # 🔥 PENJELASAN HASIL CLUSTER
     # ======================
-    st.subheader("📖 Penjelasan Hasil Cluster")
+    st.subheader("Hasil Cluster")
 
     st.markdown("""
     Grafik di atas menunjukkan jumlah nasabah dalam setiap cluster yang terbentuk dari proses K-Means.
-
     Setiap cluster merepresentasikan kelompok nasabah dengan karakteristik yang mirip. Perbedaan antar cluster biasanya dipengaruhi oleh:
     - Besaran pinjaman
     - Tingkat pendapatan
     - Frekuensi transaksi
-
     Dengan memahami cluster ini, perusahaan dapat membedakan antara nasabah bernilai tinggi, nasabah biasa, dan nasabah yang berpotensi berisiko.
     """)
 
     # ======================
     # 🔥 AUTO INTERPRETASI
     # ======================
-    st.subheader("💡 Insight Otomatis")
-
+    st.subheader("Insight")
     biggest_cluster = cluster_counts.idxmax()
     smallest_cluster = cluster_counts.idxmin()
-
     st.info(f"Cluster terbesar adalah Cluster {biggest_cluster} → mayoritas nasabah berada di kelompok ini")
     st.warning(f"Cluster terkecil adalah Cluster {smallest_cluster} → segmen ini lebih spesifik")
 
     # ======================
     # 🔥 PROFIL TIAP CLUSTER
     # ======================
-    st.subheader("📊 Profil Rata-rata per Cluster")
-
+    st.subheader("Profil Rata-rata per Cluster")
     profile = df_cluster.groupby('cluster')[['loan_amount', 'monthly_income', 'loan_count']].mean()
     st.dataframe(profile, use_container_width=True)
-
     st.markdown("""
     Interpretasi:
     - Nilai loan_amount tinggi → nasabah dengan pinjaman besar
@@ -299,8 +293,7 @@ elif menu == "Clustering Pelanggan":
     # ======================
     # 🔥 LIST DATA PER CLUSTER
     # ======================
-    st.subheader("📋 Detail Nasabah per Cluster")
-
+    st.subheader("Detail Nasabah per Cluster")
     selected_cluster = st.selectbox(
         "Pilih Cluster",
         sorted(df_cluster['cluster'].unique())
@@ -322,7 +315,7 @@ elif menu == "Clustering Pelanggan":
     # ======================
     # 🔥 INSIGHT PER CLUSTER
     # ======================
-    st.subheader("🧠 Insight Cluster")
+    st.subheader("Insight Cluster")
 
     avg_loan = cluster_data['loan_amount'].mean()
     avg_income = cluster_data['monthly_income'].mean()

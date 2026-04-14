@@ -7,16 +7,19 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-from prediction import train_model
 from src.preprocessing import load_data, preprocess
 from src.clustering import run_clustering
 from src.segmentation import rfm_segmentation
+from prediction import train_model
 
 st.set_page_config(layout="wide")
 st.title("Cicilanmu.com Analytics Dashboard")
 
-df = load_data('data/pawn_data.csv')
+#df = load_data('data/pawn_data.csv')
+#df_clean = preprocess(df)
+df = load_data('../data/pawn_data.csv')
 df_clean = preprocess(df)
+model_path = '../models/default_model.pkl'
 
 menu = st.sidebar.selectbox("Menu", [
     "Overview",

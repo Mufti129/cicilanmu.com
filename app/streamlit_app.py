@@ -217,6 +217,7 @@ Dalam studi ini, EDA digunakan untuk menganalisis hubungan antara karakteristik 
 
 Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusan bisnis, seperti penyesuaian kebijakan kredit, pengelolaan risiko, serta pengembangan strategi pemasaran yang lebih efektif dan berbasis data.
 """)
+   ###
     job_default = df.groupby('job_type')['redeemed'].mean()
     st.bar_chart(job_default)
 
@@ -230,3 +231,42 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     avg_loan = df.groupby('job_type')['loan_amount'].mean().idxmax()
 
     st.info(f"Pekerjaan dengan pinjaman terbesar: {avg_loan}")
+    ###
+    # Hitung default rate per job
+    job_default = df.groupby('job_type')['redeemed'].mean()
+    
+    st.bar_chart(job_default)
+    
+    # ======================
+    # 🔥 PENJELASAN SEDERHANA
+    # ======================
+    st.subheader("📖 Penjelasan Grafik")
+    
+    st.markdown("""
+    Grafik di atas menunjukkan tingkat keberhasilan pelunasan pinjaman (redeemed) berdasarkan jenis pekerjaan nasabah.
+    
+    Semakin tinggi nilai pada grafik, berarti semakin besar kemungkinan nasabah dari kelompok pekerjaan tersebut berhasil melunasi pinjaman.
+    Sebaliknya, jika nilainya rendah, maka kelompok tersebut memiliki risiko gagal bayar yang lebih tinggi.
+    """)
+    
+    # ======================
+    # 🔥 AUTO INTERPRETASI
+    # ======================
+    st.subheader("💡 Insight Otomatis")
+    
+    # Cari yang terbaik & terburuk
+    best_job = job_default.idxmax()
+    worst_job = job_default.idxmin()
+    
+    st.success(f"Nasabah dengan pekerjaan **{best_job}** memiliki tingkat pelunasan terbaik (risiko paling rendah).")
+    
+    st.warning(f"Nasabah dengan pekerjaan **{worst_job}** memiliki risiko gagal bayar lebih tinggi dibandingkan lainnya.")
+    
+    # Tambahan interpretasi sederhana
+    for job, value in job_default.items():
+        if value >= 0.8:
+            st.info(f"{job} → Sangat stabil dalam pembayaran")
+        elif value >= 0.6:
+            st.info(f"{job} → Cukup stabil")
+        else:
+            st.info(f"{job} → Perlu perhatian (risiko lebih tinggi)")

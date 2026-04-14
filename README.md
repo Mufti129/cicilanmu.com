@@ -19,3 +19,28 @@ python train_model.py
 
 ### 3. Run dashboard
 streamlit run app/streamlit_app.py
+
+## Methodology
+
+Project ini menggunakan beberapa metode analisis:
+
+### 1. Classification (Random Forest)
+Digunakan untuk memprediksi risiko gagal bayar nasabah berdasarkan fitur seperti:
+- Loan to Value (LTV)
+- Income
+- Days Late
+
+### 2. Clustering (K-Means)
+Digunakan untuk mengelompokkan pelanggan berdasarkan perilaku pinjaman:
+- Loan amount
+- Income
+- Loan frequency
+
+### 3. RFM Analysis
+Segmentasi pelanggan berdasarkan:
+- Recency
+- Frequency
+- Monetary
+
+### 4. Exploratory Data Analysis (EDA)
+Digunakan untuk menemukan pola dan insight dari data.

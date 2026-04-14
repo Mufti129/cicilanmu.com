@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-from src.preprocessing import load_data, preprocess
-from src.clustering import run_clustering
-from src.segmentation import rfm_segmentation
+from preprocessing import load_data, preprocess
+from clustering import run_clustering
+from segmentation import rfm_segmentation
 
 st.set_page_config(layout="wide")
 st.title("Cicilanmu.com Analytics Dashboard")

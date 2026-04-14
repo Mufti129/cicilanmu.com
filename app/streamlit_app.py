@@ -9,7 +9,7 @@ from segmentation import rfm_segmentation
 from prediction import train_model
 
 st.set_page_config(layout="wide")
-st.title("📊 Pawnshop Analytics Dashboard")
+st.title("cicilanmu.com Analytics Dashboard")
 
 # ======================
 # LOAD DATA
@@ -44,7 +44,7 @@ menu = st.sidebar.selectbox("Menu", [
 # OVERVIEW
 # ======================
 if menu == "Overview":
-    st.header("📌 Overview")
+    st.header("Overview")
 
     total_customer = len(df)
     total_loan = df['loan_amount'].sum()
@@ -54,7 +54,7 @@ if menu == "Overview":
     st.metric("Total Loan", int(total_loan))
     st.metric("Default Rate (%)", round(default_rate, 2))
 
-    with st.expander("📘 Metodologi"):
+    with st.expander("Metodologi"):
         st.markdown("""
         - Machine Learning (Random Forest)
         - Clustering (K-Means)
@@ -63,7 +63,7 @@ if menu == "Overview":
         """)
 
     # 🔥 AUTO INSIGHT
-    st.subheader("💡 Insight Otomatis")
+    st.subheader("Insight")
 
     if default_rate > 20:
         st.warning("Default rate cukup tinggi → perlu pengetatan analisis kredit")
@@ -77,9 +77,9 @@ if menu == "Overview":
 # PREDIKSI
 # ======================
 elif menu == "Prediksi Gagal Bayar":
-    st.header("🤖 Prediksi Gagal Bayar")
+    st.header("Prediksi Gagal Bayar")
 
-    with st.expander("📘 Metodologi Random Forest"):
+    with st.expander("Metodologi Random Forest"):
        # st.markdown("""
         #Digunakan untuk klasifikasi risiko gagal bayar.
         #""")
@@ -92,7 +92,7 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
     # ======================
     # PILIH CUSTOMER
     # ======================
-    st.subheader("📋 Pilih Data Nasabah")
+    st.subheader("Pilih Data Nasabah")
 
     selected_id = st.selectbox(
         "Pilih Customer ID",
@@ -119,17 +119,17 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
     pred = model.predict(selected_clean)[0]
     prob = model.predict_proba(selected_clean)[0][pred]
 
-    st.subheader("📊 Hasil Prediksi")
+    st.subheader("Hasil Prediksi")
 
     if pred == 0:
-        st.error(f"⚠️ Risiko Tinggi Gagal Bayar (Confidence: {round(prob*100,2)}%)")
+        st.error(f"Risiko Tinggi Gagal Bayar (Confidence: {round(prob*100,2)}%)")
     else:
-        st.success(f"✅ Nasabah Aman (Confidence: {round(prob*100,2)}%)")
+        st.success(f"Nasabah Aman (Confidence: {round(prob*100,2)}%)")
 
     # ======================
     # 🔥 INSIGHT OTOMATIS
     # ======================
-    st.subheader("💡 Insight Otomatis")
+    st.subheader("Insight")
 
     loan = selected_data['loan_amount'].values[0]
     collateral = selected_data['collateral_value'].values[0]
@@ -156,26 +156,26 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
     pred = model.predict(input_data)[0]
 
     if pred == 0:
-        st.error("⚠️ Risiko Tinggi")
+        st.error("Risiko Tinggi")
     else:
-        st.success("✅ Aman")
+        st.success("Aman")
 
     # 🔥 AUTO INSIGHT
-    st.subheader("💡 Insight Otomatis")
+  #  st.subheader("💡 Insight Otomatis")
 
-    high_ltv = df[df['loan_amount']/df['collateral_value'] > 0.8]
+   # high_ltv = df[df['loan_amount']/df['collateral_value'] > 0.8]
 
-    if len(high_ltv) > 0:
-        st.warning(f"{len(high_ltv)} nasabah memiliki LTV tinggi → berisiko gagal bayar")
+    #if len(high_ltv) > 0:
+     #st.warning(f"{len(high_ltv)} nasabah memiliki LTV tinggi → berisiko gagal bayar")
 
-    late_users = df[df['days_late'] > 7]
+    #late_users = df[df['days_late'] > 7]
 
-    st.info(f"{len(late_users)} nasabah sering terlambat → kandidat default")
+   # st.info(f"{len(late_users)} nasabah sering terlambat → kandidat default")
 #####+list data
     # ======================
 # 🔥 LIST NASABAH BERISIKO
 # ======================
-    st.subheader("🚨 Daftar Nasabah Berpotensi Gagal Bayar")
+    st.subheader("Daftar Nasabah Berpotensi Gagal Bayar")
     
     # Ambil semua data untuk prediksi
     all_features = df_clean.drop(columns=['customer_id', 'redeemed'])
@@ -204,15 +204,15 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
         )
     
     else:
-        st.success("Tidak ada nasabah berisiko tinggi 🎉")
+        st.success("Tidak ada nasabah berisiko tinggi")
     #####
 # ======================
 # CLUSTERING
 # ======================
 elif menu == "Clustering Pelanggan":
-    st.header("👥 Clustering")
+    st.header("Clustering")
 
-    with st.expander("📘 Metodologi K-Means"):
+    with st.expander("Metodologi K-Means"):
         #st.markdown("Segmentasi berdasarkan perilaku pinjaman")
         st.markdown("""Analisis clustering dalam dashboard ini menggunakan metode K-Means Clustering, yaitu teknik unsupervised learning yang bertujuan untuk mengelompokkan pelanggan ke dalam beberapa segmen berdasarkan kemiripan karakteristik mereka. Algoritma ini bekerja dengan membagi data ke dalam sejumlah cluster yang telah ditentukan sebelumnya, di mana setiap data akan masuk ke cluster dengan jarak terdekat terhadap centroid.
 Dalam implementasinya pada bisnis gadai, variabel yang digunakan meliputi jumlah pinjaman, pendapatan bulanan, dan frekuensi transaksi. Dengan pendekatan ini, perusahaan dapat mengidentifikasi kelompok pelanggan seperti nasabah bernilai tinggi, nasabah dengan aktivitas rendah, maupun nasabah dengan potensi risiko tinggi.
@@ -224,7 +224,7 @@ Hasil clustering ini sangat berguna dalam mendukung pengambilan keputusan strate
     st.bar_chart(cluster_counts)
 
     # 🔥 AUTO INSIGHT
-    st.subheader("💡 Insight Otomatis")
+    st.subheader("Insight")
 
     biggest_cluster = cluster_counts.idxmax()
 
@@ -239,9 +239,9 @@ Hasil clustering ini sangat berguna dalam mendukung pengambilan keputusan strate
 # SEGMENTASI
 # ======================
 elif menu == "Segmentasi Pelanggan":
-    st.header("📈 Segmentasi")
+    st.header("Segmentasi")
 
-    with st.expander("📘 Metodologi RFM"):
+    with st.expander("Metodologi RFM"):
         #st.markdown("Segmentasi berdasarkan nilai customer")
         st.markdown("""
 Segmentasi pelanggan dilakukan menggunakan metode RFM Analysis, yaitu pendekatan yang mengelompokkan pelanggan berdasarkan tiga dimensi utama: Recency (seberapa baru pelanggan melakukan transaksi), Frequency (seberapa sering pelanggan bertransaksi), dan Monetary (berapa besar nilai transaksi yang dihasilkan).
@@ -256,7 +256,7 @@ Dengan segmentasi ini, perusahaan dapat merancang strategi yang lebih tepat sasa
     st.bar_chart(segment_counts)
 
     # 🔥 AUTO INSIGHT
-    st.subheader("💡 Insight Otomatis")
+    st.subheader("Insight")
 
     if 'High' in segment_counts:
         st.success(f"{segment_counts['High']} pelanggan high value → fokus retensi")
@@ -266,7 +266,7 @@ Dengan segmentasi ini, perusahaan dapat merancang strategi yang lebih tepat sasa
     # ======================
     # 🔥 LIST DATA PER SEGMENT
     # ======================
-    st.subheader("📋 Detail Pelanggan per Segmen")
+    st.subheader("Detail Pelanggan per Segmen")
 
     selected_segment = st.selectbox(
         "Pilih Segmen",
@@ -290,7 +290,7 @@ Dengan segmentasi ini, perusahaan dapat merancang strategi yang lebih tepat sasa
     # ======================
     # 🔥 INSIGHT PER SEGMENT
     # ======================
-    st.subheader("🧠 Insight Segmen")
+    st.subheader("Insight Segmen")
 
     if selected_segment == "High":
         st.success("Pelanggan ini memiliki kontribusi tinggi → cocok untuk program loyalitas & peningkatan limit pinjaman")
@@ -304,9 +304,9 @@ Dengan segmentasi ini, perusahaan dapat merancang strategi yang lebih tepat sasa
 # PERILAKU
 # ======================
 elif menu == "Perilaku Konsumen":
-    st.header("📊 Perilaku Konsumen")
+    st.header("Perilaku Konsumen")
 
-    with st.expander("📘 Metodologi EDA"):
+    with st.expander("Metodologi EDA"):
         #st.markdown("Analisis pola perilaku nasabah")
         st.markdown("""
 Analisis perilaku konsumen dalam dashboard ini dilakukan باستخدام pendekatan Exploratory Data Analysis (EDA), yaitu proses eksplorasi data untuk memahami pola, tren, dan hubungan antar variabel yang terdapat dalam dataset. EDA merupakan langkah awal yang sangat penting dalam data analytics karena membantu mengidentifikasi insight yang relevan sebelum dilakukan analisis lanjutan.
@@ -324,7 +324,7 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     # ======================
     # 🔥 PENJELASAN SEDERHANA
     # ======================
-    st.subheader("📖 Penjelasan Grafik")
+    st.subheader("Penjelasan Grafik")
     
     st.markdown("""
     Grafik di atas menunjukkan tingkat keberhasilan pelunasan pinjaman (redeemed) berdasarkan jenis pekerjaan nasabah.
@@ -336,7 +336,7 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     # ======================
     # 🔥 AUTO INTERPRETASI
     # ======================
-    st.subheader("💡 Insight Otomatis")
+    st.subheader("Insight")
     
     # Cari yang terbaik & terburuk
     best_job = job_default.idxmax()

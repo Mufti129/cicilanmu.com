@@ -83,6 +83,27 @@ if menu == "Overview":
     if total_loan / total_customer > 3000000:
         st.info("Rata-rata pinjaman tinggi → potensi profit besar tapi risiko meningkat")
 
+    # ======================
+# 📋 DATA DICTIONARY
+# ======================
+    st.markdown("---")
+    st.subheader("Data Dictionary")
+    
+    st.markdown("""
+    Berikut adalah penjelasan dari setiap kolom yang digunakan dalam dataset:
+    
+    | Kolom            | Keterangan           |
+    |------------------|----------------------|
+    | customer_id      | ID nasabah           |
+    | job_type         | jenis pekerjaan      |
+    | monthly_income   | pendapatan           |
+    | loan_amount      | jumlah pinjaman      |
+    | collateral_value | nilai jaminan        |
+    | loan_count       | jumlah transaksi     |
+    | days_late        | keterlambatan        |
+    | branch           | cabang               |
+    | redeemed         | 1 = bayar, 0 = gagal |
+    """)
 # ======================
 # PREDIKSI
 # ======================

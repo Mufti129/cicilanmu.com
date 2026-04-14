@@ -107,7 +107,41 @@ Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proak
     late_users = df[df['days_late'] > 7]
 
     st.info(f"{len(late_users)} nasabah sering terlambat → kandidat default")
-
+#####+list data
+    # ======================
+# 🔥 LIST NASABAH BERISIKO
+# ======================
+    st.subheader("🚨 Daftar Nasabah Berpotensi Gagal Bayar")
+    
+    # Ambil semua data untuk prediksi
+    all_features = df_clean.drop(columns=['customer_id', 'redeemed'])
+    
+    # Prediksi semua nasabah
+    all_preds = model.predict(all_features)
+    all_probs = model.predict_proba(all_features)
+    
+    # Buat dataframe hasil
+    result_df = df.copy()
+    result_df['prediction'] = all_preds
+    result_df['risk_probability'] = all_probs.max(axis=1)
+    
+    # Filter yang berisiko (0 = gagal bayar)
+    risk_df = result_df[result_df['prediction'] == 0]
+    
+    if len(risk_df) > 0:
+        st.warning(f"Terdapat {len(risk_df)} nasabah berisiko tinggi")
+    
+        # Sort dari paling berisiko
+        risk_df = risk_df.sort_values(by='risk_probability', ascending=False)
+    
+        st.dataframe(
+            risk_df[['customer_id', 'job_type', 'monthly_income', 'loan_amount', 'days_late', 'risk_probability']],
+            use_container_width=True
+        )
+    
+    else:
+        st.success("Tidak ada nasabah berisiko tinggi 🎉")
+    #####
 # ======================
 # CLUSTERING
 # ======================

@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+from prediction import train_model
 from src.preprocessing import load_data, preprocess
 from src.clustering import run_clustering
 from src.segmentation import rfm_segmentation

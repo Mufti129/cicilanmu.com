@@ -144,8 +144,14 @@ elif menu == "Segmentasi Pelanggan":
     st.header("📈 Segmentasi")
 
     with st.expander("📘 Metodologi RFM"):
-        st.markdown("Segmentasi berdasarkan nilai customer")
+        #st.markdown("Segmentasi berdasarkan nilai customer")
+        st.markdown("""
+Segmentasi pelanggan dilakukan menggunakan metode RFM Analysis, yaitu pendekatan yang mengelompokkan pelanggan berdasarkan tiga dimensi utama: Recency (seberapa baru pelanggan melakukan transaksi), Frequency (seberapa sering pelanggan bertransaksi), dan Monetary (berapa besar nilai transaksi yang dihasilkan).
 
+Metode ini umum digunakan dalam analisis perilaku pelanggan karena mampu memberikan gambaran yang jelas mengenai nilai dan kontribusi masing-masing pelanggan terhadap bisnis. Dalam konteks gadai, RFM membantu mengidentifikasi pelanggan yang aktif dan bernilai tinggi, serta membedakannya dengan pelanggan yang kurang aktif atau berisiko churn.
+
+Dengan segmentasi ini, perusahaan dapat merancang strategi yang lebih tepat sasaran, seperti memberikan penawaran khusus kepada pelanggan high value, meningkatkan engagement pada pelanggan mid value, serta melakukan pendekatan retensi terhadap pelanggan low value. Implementasi RFM diharapkan dapat meningkatkan loyalitas pelanggan sekaligus memaksimalkan profitabilitas.
+""")
     rfm = rfm_segmentation(df)
     segment_counts = rfm['segment'].value_counts()
 
@@ -167,8 +173,14 @@ elif menu == "Perilaku Konsumen":
     st.header("📊 Perilaku Konsumen")
 
     with st.expander("📘 Metodologi EDA"):
-        st.markdown("Analisis pola perilaku nasabah")
+        #st.markdown("Analisis pola perilaku nasabah")
+        st.markdown("""
+Analisis perilaku konsumen dalam dashboard ini dilakukan باستخدام pendekatan Exploratory Data Analysis (EDA), yaitu proses eksplorasi data untuk memahami pola, tren, dan hubungan antar variabel yang terdapat dalam dataset. EDA merupakan langkah awal yang sangat penting dalam data analytics karena membantu mengidentifikasi insight yang relevan sebelum dilakukan analisis lanjutan.
 
+Dalam studi ini, EDA digunakan untuk menganalisis hubungan antara karakteristik nasabah, seperti jenis pekerjaan, jumlah pinjaman, dan tingkat keterlambatan pembayaran terhadap risiko gagal bayar. Melalui visualisasi data seperti distribusi dan perbandingan antar kelompok, perusahaan dapat memperoleh pemahaman yang lebih dalam mengenai faktor-faktor yang mempengaruhi perilaku nasabah.
+
+Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusan bisnis, seperti penyesuaian kebijakan kredit, pengelolaan risiko, serta pengembangan strategi pemasaran yang lebih efektif dan berbasis data.
+""")
     job_default = df.groupby('job_type')['redeemed'].mean()
     st.bar_chart(job_default)
 

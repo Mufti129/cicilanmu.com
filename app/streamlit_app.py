@@ -32,13 +32,14 @@ model = joblib.load(model_path)
 # ======================
 # MENU
 # ======================
-menu = st.sidebar.selectbox("Menu", [
-    "Overview",
-    "Prediksi Gagal Bayar",
-    "Clustering Pelanggan",
-    "Segmentasi Pelanggan",
-    "Perilaku Konsumen"
-])
+#menu = st.sidebar.selectbox("Menu", [
+ #   "Overview",
+  #  "Prediksi Gagal Bayar",
+   # "Clustering Pelanggan",
+   
+#"Segmentasi Pelanggan",
+ #   "Perilaku Konsumen"
+#])
 menu = st.sidebar.radio(
     "📂 Navigasi",
     [

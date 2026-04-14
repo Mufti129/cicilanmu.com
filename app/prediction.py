@@ -12,7 +12,7 @@ def train_model(df):
     model = RandomForestClassifier(random_state=42)
     model.fit(X_train, y_train)
 
-    os.makedirs("models", exist_ok=True)
-    joblib.dump(model, "models/default_model.pkl")
+    os.makedirs("../models", exist_ok=True)
+    joblib.dump(model, "../models/default_model.pkl")
 
     return model

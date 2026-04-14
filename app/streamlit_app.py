@@ -37,7 +37,9 @@ menu = st.sidebar.selectbox("Menu", [
     "Prediksi Gagal Bayar",
     "Clustering Pelanggan",
     "Segmentasi Pelanggan",
-    "Perilaku Konsumen"
+    "Perilaku Konsumen",
+    "Data Nasabah"
+    
 ])
 
 # ======================
@@ -570,3 +572,11 @@ Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusa
     
     worst_branch = branch_default.loc[branch_default['Default Rate'].idxmin(), 'Cabang']
     st.warning(f"Cabang **{worst_branch}** memiliki risiko gagal bayar lebih tinggi.")
+
+elif menu == "Data Nasabah":
+    st.header("Data Nasabah")
+
+    st.markdown("Menampilkan seluruh data nasabah yang digunakan dalam analisis.")
+
+    # tampilkan data
+    st.dataframe(df)

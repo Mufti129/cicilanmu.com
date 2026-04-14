@@ -39,7 +39,16 @@ menu = st.sidebar.selectbox("Menu", [
     "Segmentasi Pelanggan",
     "Perilaku Konsumen"
 ])
-
+menu = st.sidebar.radio(
+    "📂 Navigasi",
+    [
+        "📊 Overview",
+        "🤖 Prediksi Gagal Bayar",
+        "👥 Clustering Pelanggan",
+        "📈 Segmentasi Pelanggan",
+        "📊 Perilaku Konsumen"
+    ]
+)
 # ======================
 # OVERVIEW
 # ======================

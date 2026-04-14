@@ -88,6 +88,70 @@ Metode yang digunakan dalam analisis ini adalah Random Forest Classification, ya
 Dalam konteks bisnis gadai, metode ini digunakan untuk memprediksi kemungkinan nasabah mengalami gagal bayar (default) berdasarkan berbagai faktor seperti nilai pinjaman, nilai jaminan, tingkat keterlambatan pembayaran, serta kondisi ekonomi nasabah seperti pendapatan. Pemilihan Random Forest didasarkan pada kemampuannya dalam menangkap pola hubungan yang kompleks dan non-linear antar variabel, serta ketahanannya terhadap noise dan outlier pada data 
 Dengan adanya model ini, perusahaan dapat melakukan mitigasi risiko secara proaktif, misalnya dengan memperketat persetujuan pinjaman untuk nasabah berisiko tinggi atau menyesuaikan strategi penagihan. Hasil dari model ini diharapkan dapat membantu meningkatkan kualitas portofolio pinjaman dan mengurangi potensi kerugian akibat gagal bayar.""")
 
+    #####
+    # ======================
+    # PILIH CUSTOMER
+    # ======================
+    st.subheader("📋 Pilih Data Nasabah")
+
+    selected_id = st.selectbox(
+        "Pilih Customer ID",
+        df['customer_id']
+    )
+
+    selected_data = df[df['customer_id'] == selected_id]
+
+    st.write("Data Nasabah:")
+    st.dataframe(selected_data, use_container_width=True)
+
+    # ======================
+    # PREPROCESS DATA
+    # ======================
+    selected_clean = preprocess(selected_data)
+
+    # Samakan kolom dengan training
+    model_features = df_clean.drop(columns=['customer_id', 'redeemed']).columns
+    selected_clean = selected_clean.reindex(columns=model_features, fill_value=0)
+
+    # ======================
+    # PREDIKSI
+    # ======================
+    pred = model.predict(selected_clean)[0]
+    prob = model.predict_proba(selected_clean)[0][pred]
+
+    st.subheader("📊 Hasil Prediksi")
+
+    if pred == 0:
+        st.error(f"⚠️ Risiko Tinggi Gagal Bayar (Confidence: {round(prob*100,2)}%)")
+    else:
+        st.success(f"✅ Nasabah Aman (Confidence: {round(prob*100,2)}%)")
+
+    # ======================
+    # 🔥 INSIGHT OTOMATIS
+    # ======================
+    st.subheader("💡 Insight Otomatis")
+
+    loan = selected_data['loan_amount'].values[0]
+    collateral = selected_data['collateral_value'].values[0]
+    income = selected_data['monthly_income'].values[0]
+    late = selected_data['days_late'].values[0]
+
+    ltv = loan / collateral
+
+    if ltv > 0.8:
+        st.warning("LTV tinggi → risiko meningkat")
+
+    if income < 4000000:
+        st.warning("Pendapatan rendah → kemampuan bayar terbatas")
+
+    if late > 7:
+        st.error("Riwayat keterlambatan tinggi → indikator utama gagal bayar")
+
+    if pred == 1:
+        st.success("Nasabah layak dipertimbangkan untuk pinjaman lanjutan")
+    else:
+        st.warning("Perlu analisis tambahan sebelum persetujuan pinjaman")
+    #####
     input_data = df_clean.drop(columns=['customer_id', 'redeemed']).iloc[0:1]
     pred = model.predict(input_data)[0]
 

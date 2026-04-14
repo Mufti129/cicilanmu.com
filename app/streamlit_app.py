@@ -289,7 +289,7 @@ elif menu == "Clustering Pelanggan":
 
     st.markdown("""
     Grafik di atas menunjukkan jumlah nasabah dalam setiap cluster yang terbentuk dari proses K-Means.
-    Setiap cluster merepresentasikan kelompok nasabah dengan karakteristik yang mirip. Perbedaan antar cluster biasanya dipengaruhi oleh:
+    Setiap cluster merepresentasikan kelompok nasabah dengan karakteristik yang mirip. Perbedaan antar cluster dipengaruhi oleh:
     - Besaran pinjaman
     - Tingkat pendapatan
     - Frekuensi transaksi

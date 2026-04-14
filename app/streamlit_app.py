@@ -32,26 +32,14 @@ model = joblib.load(model_path)
 # ======================
 # MENU
 # ======================
-#menu = st.sidebar.selectbox("Menu", [
- #   "Overview",
-  #  "Prediksi Gagal Bayar",
-   # "Clustering Pelanggan",
-   
-#"Segmentasi Pelanggan",
- #   "Perilaku Konsumen"
-#])
-st.sidebar.title("📂 Menu")
+menu = st.sidebar.selectbox("Menu", [
+    "Overview",
+    "Prediksi Gagal Bayar",
+    "Clustering Pelanggan",
+    "Segmentasi Pelanggan",
+    "Perilaku Konsumen"
+])
 
-if st.sidebar.button("📊 Overview"):
-    menu = "Overview"
-elif st.sidebar.button("🤖 Prediksi Gagal Bayar"):
-    menu = "Prediksi Gagal Bayar"
-elif st.sidebar.button("👥 Clustering"):
-    menu = "Clustering Pelanggan"
-elif st.sidebar.button("📈 Segmentasi"):
-    menu = "Segmentasi Pelanggan"
-elif st.sidebar.button("📊 Perilaku"):
-    menu = "Perilaku Konsumen"
 # ======================
 # OVERVIEW
 # ======================

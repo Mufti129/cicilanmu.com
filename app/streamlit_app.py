@@ -64,11 +64,11 @@ if menu == "Overview":
     with col3:
         st.metric("Default Rate (%)", f"{round(default_rate,2)}%")
     with col3:
-    st.metric(
-        "Default Rate (%)",
-        f"{round(default_rate,2)}%",
-        delta="+5%" if default_rate > 30 else "-2%"
-    )
+        st.metric(
+            "Default Rate (%)",
+            f"{round(default_rate,2)}%",
+            delta="+5%" if default_rate > 30 else "-2%"
+        )
     with st.expander("Metodologi"):
         st.markdown("""
         - Machine Learning (Random Forest)

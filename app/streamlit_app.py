@@ -217,20 +217,6 @@ Dalam studi ini, EDA digunakan untuk menganalisis hubungan antara karakteristik 
 
 Hasil dari analisis ini dapat digunakan sebagai dasar dalam pengambilan keputusan bisnis, seperti penyesuaian kebijakan kredit, pengelolaan risiko, serta pengembangan strategi pemasaran yang lebih efektif dan berbasis data.
 """)
-   ###
-    job_default = df.groupby('job_type')['redeemed'].mean()
-    st.bar_chart(job_default)
-
-    # 🔥 AUTO INSIGHT
-    st.subheader("💡 Insight Otomatis")
-
-    risky_job = job_default.idxmin()
-
-    st.warning(f"Pekerjaan dengan risiko tertinggi: {risky_job}")
-
-    avg_loan = df.groupby('job_type')['loan_amount'].mean().idxmax()
-
-    st.info(f"Pekerjaan dengan pinjaman terbesar: {avg_loan}")
     ###
     # Hitung default rate per job
     job_default = df.groupby('job_type')['redeemed'].mean()

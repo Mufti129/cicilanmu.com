@@ -53,7 +53,22 @@ if menu == "Overview":
     st.metric("Total Nasabah", total_customer)
     st.metric("Total Loan", int(total_loan))
     st.metric("Default Rate (%)", round(default_rate, 2))
+    col1, col2, col3 = st.columns(3)
 
+    with col1:
+        st.metric("Total Nasabah", total_customer)
+    
+    with col2:
+        st.metric("Total Loan", f"{int(total_loan):,}")
+    
+    with col3:
+        st.metric("Default Rate (%)", f"{round(default_rate,2)}%")
+    with col3:
+    st.metric(
+        "Default Rate (%)",
+        f"{round(default_rate,2)}%",
+        delta="+5%" if default_rate > 30 else "-2%"
+    )
     with st.expander("Metodologi"):
         st.markdown("""
         - Machine Learning (Random Forest)

@@ -7,7 +7,7 @@ from src.clustering import run_clustering
 from src.segmentation import rfm_segmentation
 
 st.set_page_config(layout="wide")
-st.title("📊 Pawnshop Analytics Dashboard")
+st.title("Cicilanmu.com Analytics Dashboard")
 
 df = load_data('data/pawn_data.csv')
 df_clean = preprocess(df)
@@ -24,7 +24,7 @@ menu = st.sidebar.selectbox("Menu", [
 # OVERVIEW
 # ======================
 if menu == "Overview":
-    st.header("📌 Overview")
+    st.header("Overview")
 
     st.markdown("""
     Dashboard ini dibuat untuk menganalisis bisnis gadai menggunakan pendekatan data analytics.
@@ -44,10 +44,10 @@ if menu == "Overview":
 # PREDIKSI
 # ======================
 elif menu == "Prediksi Gagal Bayar":
-    st.header("🤖 Prediksi Gagal Bayar")
+    st.header("Prediksi Gagal Bayar")
 
     st.markdown("""
-    ### 📘 Metodologi: Random Forest Classification
+    ### Metodologi: Random Forest Classification
 
     Model ini digunakan untuk memprediksi apakah nasabah akan gagal bayar.
 
@@ -80,10 +80,10 @@ elif menu == "Prediksi Gagal Bayar":
 # CLUSTERING
 # ======================
 elif menu == "Clustering Pelanggan":
-    st.header("👥 Clustering Pelanggan")
+    st.header("Clustering Pelanggan")
 
     st.markdown("""
-    ### 📘 Metodologi: K-Means Clustering
+    ### Metodologi: K-Means Clustering
 
     Digunakan untuk mengelompokkan pelanggan berdasarkan kemiripan.
 
@@ -112,10 +112,10 @@ elif menu == "Clustering Pelanggan":
 # SEGMENTASI
 # ======================
 elif menu == "Segmentasi Pelanggan":
-    st.header("📈 Segmentasi Pelanggan")
+    st.header("Segmentasi Pelanggan")
 
     st.markdown("""
-    ### 📘 Metodologi: RFM Analysis
+    ### Metodologi: RFM Analysis
 
     Segmentasi berdasarkan:
     - Recency (terakhir transaksi)
@@ -135,10 +135,10 @@ elif menu == "Segmentasi Pelanggan":
 # PERILAKU
 # ======================
 elif menu == "Perilaku Konsumen":
-    st.header("📊 Perilaku Konsumen")
+    st.header("Perilaku Konsumen")
 
     st.markdown("""
-    ### 📘 Metodologi: Exploratory Data Analysis (EDA)
+    ### Metodologi: Exploratory Data Analysis (EDA)
 
     Digunakan untuk:
     - Mencari pola data

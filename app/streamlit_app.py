@@ -1,22 +1,37 @@
-import sys
-import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 
-from src.preprocessing import load_data, preprocess
-from src.clustering import run_clustering
-from src.segmentation import rfm_segmentation
+from preprocessing import load_data, preprocess
+from clustering import run_clustering
+from segmentation import rfm_segmentation
+from prediction import train_model
 
 st.set_page_config(layout="wide")
-st.title("Cicilanmu.com Analytics Dashboard")
+st.title("📊 Pawnshop Analytics Dashboard")
 
-df = load_data('data/pawn_data.csv')
+# ======================
+# LOAD DATA
+# ======================
+df = load_data('../data/pawn_data.csv')
 df_clean = preprocess(df)
 
+# ======================
+# MODEL
+# ======================
+model_path = '../models/default_model.pkl'
+
+if not os.path.exists(model_path):
+    st.warning("Model belum ada, sedang training...")
+    train_model(df_clean)
+    st.success("Model berhasil dibuat!")
+
+model = joblib.load(model_path)
+
+# ======================
+# MENU
+# ======================
 menu = st.sidebar.selectbox("Menu", [
     "Overview",
     "Prediksi Gagal Bayar",
@@ -29,130 +44,134 @@ menu = st.sidebar.selectbox("Menu", [
 # OVERVIEW
 # ======================
 if menu == "Overview":
-    st.header("Overview")
+    st.header("📌 Overview")
 
-    st.markdown("""
-    Dashboard ini dibuat untuk menganalisis bisnis gadai menggunakan pendekatan data analytics.
+    total_customer = len(df)
+    total_loan = df['loan_amount'].sum()
+    default_rate = (1 - df['redeemed'].mean()) * 100
 
-    **Metodologi yang digunakan:**
-    - Machine Learning (Prediksi Risiko)
-    - Clustering (Segmentasi Perilaku)
-    - RFM Analysis (Segmentasi Nilai Customer)
-    - Exploratory Data Analysis (EDA)
-    """)
+    st.metric("Total Nasabah", total_customer)
+    st.metric("Total Loan", int(total_loan))
+    st.metric("Default Rate (%)", round(default_rate, 2))
 
-    st.metric("Total Nasabah", len(df))
-    st.metric("Total Loan", int(df['loan_amount'].sum()))
-    st.metric("Default Rate (%)", round((1 - df['redeemed'].mean()) * 100, 2))
+    with st.expander("📘 Metodologi"):
+        st.markdown("""
+        - Machine Learning (Random Forest)
+        - Clustering (K-Means)
+        - RFM Analysis
+        - Exploratory Data Analysis
+        """)
+
+    # 🔥 AUTO INSIGHT
+    st.subheader("💡 Insight Otomatis")
+
+    if default_rate > 20:
+        st.warning("Default rate cukup tinggi → perlu pengetatan analisis kredit")
+    else:
+        st.success("Default rate masih dalam batas aman")
+
+    if total_loan / total_customer > 3000000:
+        st.info("Rata-rata pinjaman tinggi → potensi profit besar tapi risiko meningkat")
 
 # ======================
 # PREDIKSI
 # ======================
 elif menu == "Prediksi Gagal Bayar":
-    st.header("Prediksi Gagal Bayar")
+    st.header("🤖 Prediksi Gagal Bayar")
 
-    st.markdown("""
-    ### Metodologi: Random Forest Classification
-
-    Model ini digunakan untuk memprediksi apakah nasabah akan gagal bayar.
-
-    **Cara kerja:**
-    - Menggunakan banyak decision tree
-    - Menggabungkan hasil prediksi (ensemble)
-
-    **Kenapa dipilih:**
-    - Mampu menangkap pola kompleks
-    - Cocok untuk data keuangan
-    - Stabil terhadap outlier
-
-    **Fitur utama:**
-    - Loan to Value (LTV)
-    - Income
-    - Days Late
-    """)
-
-    model = joblib.load('models/default_model.pkl')
+    with st.expander("📘 Metodologi Random Forest"):
+        st.markdown("""
+        Digunakan untuk klasifikasi risiko gagal bayar.
+        """)
 
     input_data = df_clean.drop(columns=['customer_id', 'redeemed']).iloc[0:1]
     pred = model.predict(input_data)[0]
 
     if pred == 0:
-        st.error("⚠️ Risiko Tinggi Gagal Bayar")
+        st.error("⚠️ Risiko Tinggi")
     else:
-        st.success("✅ Nasabah Aman")
+        st.success("✅ Aman")
+
+    # 🔥 AUTO INSIGHT
+    st.subheader("💡 Insight Otomatis")
+
+    high_ltv = df[df['loan_amount']/df['collateral_value'] > 0.8]
+
+    if len(high_ltv) > 0:
+        st.warning(f"{len(high_ltv)} nasabah memiliki LTV tinggi → berisiko gagal bayar")
+
+    late_users = df[df['days_late'] > 7]
+
+    st.info(f"{len(late_users)} nasabah sering terlambat → kandidat default")
 
 # ======================
 # CLUSTERING
 # ======================
 elif menu == "Clustering Pelanggan":
-    st.header("Clustering Pelanggan")
+    st.header("👥 Clustering")
 
-    st.markdown("""
-    ### Metodologi: K-Means Clustering
-
-    Digunakan untuk mengelompokkan pelanggan berdasarkan kemiripan.
-
-    **Variabel:**
-    - Loan amount
-    - Monthly income
-    - Loan frequency
-
-    **Tujuan:**
-    - Mengetahui kelompok pelanggan
-    - Membantu strategi bisnis (targeting)
-    """)
+    with st.expander("📘 Metodologi K-Means"):
+        st.markdown("Segmentasi berdasarkan perilaku pinjaman")
 
     df_cluster = run_clustering(df_clean)
 
-    st.bar_chart(df_cluster['cluster'].value_counts())
+    cluster_counts = df_cluster['cluster'].value_counts()
+    st.bar_chart(cluster_counts)
 
-    st.markdown("""
-    **Interpretasi:**
-    - Cluster 0 → High Value
-    - Cluster 1 → Medium
-    - Cluster 2 → Risky
-    """)
+    # 🔥 AUTO INSIGHT
+    st.subheader("💡 Insight Otomatis")
+
+    biggest_cluster = cluster_counts.idxmax()
+
+    st.info(f"Cluster terbesar adalah Cluster {biggest_cluster}")
+
+    avg_income = df.groupby('customer_id')['monthly_income'].mean().mean()
+
+    if avg_income < 5000000:
+        st.warning("Mayoritas nasabah memiliki income rendah → risiko meningkat")
 
 # ======================
 # SEGMENTASI
 # ======================
 elif menu == "Segmentasi Pelanggan":
-    st.header("Segmentasi Pelanggan")
+    st.header("📈 Segmentasi")
 
-    st.markdown("""
-    ### Metodologi: RFM Analysis
-
-    Segmentasi berdasarkan:
-    - Recency (terakhir transaksi)
-    - Frequency (jumlah transaksi)
-    - Monetary (nilai transaksi)
-
-    **Tujuan:**
-    - Identifikasi pelanggan bernilai tinggi
-    - Optimasi strategi marketing
-    """)
+    with st.expander("📘 Metodologi RFM"):
+        st.markdown("Segmentasi berdasarkan nilai customer")
 
     rfm = rfm_segmentation(df)
+    segment_counts = rfm['segment'].value_counts()
 
-    st.bar_chart(rfm['segment'].value_counts())
+    st.bar_chart(segment_counts)
+
+    # 🔥 AUTO INSIGHT
+    st.subheader("💡 Insight Otomatis")
+
+    if 'High' in segment_counts:
+        st.success(f"{segment_counts['High']} pelanggan high value → fokus retensi")
+
+    if 'Low' in segment_counts:
+        st.warning(f"{segment_counts['Low']} pelanggan low value → perlu engagement")
 
 # ======================
 # PERILAKU
 # ======================
 elif menu == "Perilaku Konsumen":
-    st.header("Perilaku Konsumen")
+    st.header("📊 Perilaku Konsumen")
 
-    st.markdown("""
-    ### Metodologi: Exploratory Data Analysis (EDA)
+    with st.expander("📘 Metodologi EDA"):
+        st.markdown("Analisis pola perilaku nasabah")
 
-    Digunakan untuk:
-    - Mencari pola data
-    - Mengidentifikasi hubungan antar variabel
-    - Menemukan insight bisnis
+    job_default = df.groupby('job_type')['redeemed'].mean()
+    st.bar_chart(job_default)
 
-    **Contoh analisis:**
-    - Default rate berdasarkan pekerjaan
-    - Distribusi pinjaman
-    """)
+    # 🔥 AUTO INSIGHT
+    st.subheader("💡 Insight Otomatis")
 
-    st.bar_chart(df.groupby('job_type')['redeemed'].mean())
+    risky_job = job_default.idxmin()
+
+    st.warning(f"Pekerjaan dengan risiko tertinggi: {risky_job}")
+
+    avg_loan = df.groupby('job_type')['loan_amount'].mean().idxmax()
+
+    st.info(f"Pekerjaan dengan pinjaman terbesar: {avg_loan}")

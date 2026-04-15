@@ -165,10 +165,10 @@ elif menu == "Prediksi Gagal Bayar":
     input_data = df_clean.drop(columns=['customer_id', 'redeemed']).iloc[0:1]
     pred = model.predict(input_data)[0]
 
-    if pred == 0:
-        st.error("Risiko Tinggi")
-    else:
-        st.success("Aman")
+    #if pred == 0:
+     #   st.error("Risiko Tinggi")
+    #else:
+     #   st.success("Aman")
 
     # 🔥 AUTO INSIGHT
   #  st.subheader("💡 Insight Otomatis")
